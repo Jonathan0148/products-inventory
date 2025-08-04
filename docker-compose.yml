@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  postgres-products:
+    image: postgres:15
+    container_name: postgres-products
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: products_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - pgdata-products:/var/lib/postgresql/data
+
+  postgres-inventory:
+    image: postgres:15
+    container_name: postgres-inventory
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: inventory_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - pgdata-inventory:/var/lib/postgresql/data
+
+  product-inventory:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    container_name: product-inventory
+    depends_on:
+      - postgres-products
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+  inventory:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    container_name: inventory
+    depends_on:
+      - postgres-inventory
+      - product-inventory
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  pgdata-products:
+  pgdata-inventory:
