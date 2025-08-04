@@ -114,7 +114,6 @@ sequenceDiagram
 3. Si el producto existe:
    - Se verifica el stock.
    - Se actualiza la cantidad disponible.
-   - (Opcional) Se guarda historial de compras.
 4. Se retorna una respuesta indicando éxito o error.
 
 ---
