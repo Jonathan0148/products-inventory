@@ -157,7 +157,7 @@ Cada microservicio contiene:
 
 #### Ejecutar pruebas unitarias
 
-Desde la raíz de cada microservicio:
+Desde la raíz de **cada microservicio**:
 
 ```bash
 ./mvnw test
@@ -172,6 +172,21 @@ Las pruebas de integración se ejecutan automáticamente durante el proceso de b
 ```
 
 También pueden ejecutarse individualmente desde el IDE o con comandos específicos por clase.
+
+---
+
+### 📌 Control de versiones y Git Flow
+
+Cada microservicio fue desarrollado siguiendo el modelo **Git Flow**, con un manejo claro de ramas como `main`, `develop` y ramas específicas de funcionalidades (`feat/...`).
+
+> ⚠️ Cabe aclarar que el uso de Git Flow se implementó de manera **independiente en cada repositorio original**:
+>
+> - Repositorio de Productos: [productinventory](https://github.com/Jonathan0148/productinventory.git)
+> - Repositorio de Inventario: [inventoryproduct](https://github.com/Jonathan0148/inventoryproduct.git)
+>
+> Esto se hizo así para mantener independencia total durante el desarrollo de cada microservicio.
+
+En este repositorio combinado (`products-inventory`) no se aplicó Git Flow, ya que su objetivo es exclusivamente **orquestar ambos microservicios mediante Docker**.
 
 ---
 
