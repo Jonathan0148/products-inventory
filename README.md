@@ -4,7 +4,7 @@ Este proyecto implementa una arquitectura basada en microservicios para gestiona
 
 Repositorio general: [https://github.com/Jonathan0148/products-inventory.git](https://github.com/Jonathan0148/products-inventory.git)
 
-> 📌 Este repositorio combina ambos microservicios para facilitar la orquestación con Docker. Cada microservicio también se encuentra de forma independiente en:
+> Este repositorio combina ambos microservicios para facilitar la orquestación con Docker. Cada microservicio también se encuentra de forma independiente en:
 >
 > - Repositorio de Productos: [https://github.com/Jonathan0148/productinventory.git](https://github.com/Jonathan0148/productinventory.git)
 > - Repositorio de Inventario: [https://github.com/Jonathan0148/inventoryproduct.git](https://github.com/Jonathan0148/inventoryproduct.git)
@@ -13,20 +13,20 @@ Repositorio general: [https://github.com/Jonathan0148/products-inventory.git](ht
 
 ### 1️⃣ Instrucciones de instalación y ejecución
 
-#### 🚀 Requisitos
+#### Requisitos
 
 - Docker y Docker Compose instalados
 - Java 17
 - Maven 3.9.x
 
-#### 🧱 Clonar el repositorio principal
+#### Clonar el repositorio principal
 
 ```bash
 git clone https://github.com/Jonathan0148/products-inventory.git
 cd products-inventory
 ```
 
-#### 🛠️ Construir los microservicios
+#### Construir los microservicios
 
 ```bash
 cd product
@@ -36,7 +36,7 @@ cd ../inventory
 cd ..
 ```
 
-#### 🐳 Levantar todos los servicios con Docker
+#### Levantar todos los servicios con Docker
 
 ```bash
 docker-compose up --build
@@ -114,6 +114,7 @@ sequenceDiagram
 3. Si el producto existe:
    - Se verifica el stock.
    - Se actualiza la cantidad disponible.
+   - (Opcional) Se guarda historial de compras.
 4. Se retorna una respuesta indicando éxito o error.
 
 ---
@@ -126,11 +127,11 @@ Durante el desarrollo se utilizó **ChatGPT (GPT-4o)** como herramienta de acomp
 - Revisar flujos de lógica y detectar errores potenciales.
 - Proponer buenas prácticas y mejoras en la calidad del código.
 
-🧠 Todas las recomendaciones fueron evaluadas críticamente y adaptadas al contexto del proyecto.
+Todas las recomendaciones fueron evaluadas críticamente y adaptadas al contexto del proyecto.
 
 ---
 
-### 📬 Documentación de APIs
+### Documentación de APIs
 
 - Swagger UI para cada microservicio:
   - [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
@@ -138,21 +139,21 @@ Durante el desarrollo se utilizó **ChatGPT (GPT-4o)** como herramienta de acomp
 
 ---
 
-### 📁 Postman
+### Postman
 
 En la raíz del proyecto encontrarás:
 
-- 📨 **Colección de Postman** con todos los endpoints documentados.
-- 🌐 **Environment de Postman** con API Keys y hosts preconfigurados.
+- Colección de Postman con todos los endpoints documentados.
+- Environment de Postman con API Keys y hosts preconfigurados.
 
 ---
 
-### 🧪 Pruebas
+### Pruebas
 
 Cada microservicio contiene:
 
-- ✅ **Pruebas unitarias** completas con JUnit.
-- 🔁 **Pruebas de integración** que simulan escenarios reales (con base de datos y llamadas HTTP).
+- Pruebas unitarias completas con JUnit.
+- Pruebas de integración que simulan escenarios reales (con base de datos y llamadas HTTP).
 
 #### Ejecutar pruebas unitarias
 
@@ -174,11 +175,11 @@ También pueden ejecutarse individualmente desde el IDE o con comandos específi
 
 ---
 
-### 📌 Control de versiones y Git Flow
+### Control de versiones y Git Flow
 
 Cada microservicio fue desarrollado siguiendo el modelo **Git Flow**, con un manejo claro de ramas como `main`, `develop` y ramas específicas de funcionalidades (`feat/...`).
 
-> ⚠️ Cabe aclarar que el uso de Git Flow se implementó de manera **independiente en cada repositorio original**:
+> Cabe aclarar que el uso de Git Flow se implementó de manera **independiente en cada repositorio original**:
 >
 > - Repositorio de Productos: [productinventory](https://github.com/Jonathan0148/productinventory.git)
 > - Repositorio de Inventario: [inventoryproduct](https://github.com/Jonathan0148/inventoryproduct.git)
@@ -189,5 +190,27 @@ En este repositorio combinado (`products-inventory`) no se aplicó Git Flow, ya 
 
 ---
 
-✅ Proyecto listo para ser probado, desplegado y ampliado según futuras necesidades del sistema.
+### Patrones aplicados
+
+- **Arquitectura de microservicios**: separación clara de responsabilidades por contexto de negocio.
+- **Bounded Context y SRP**: cada servicio tiene una única responsabilidad bien definida.
+- **DTOs**: para desacoplar entidades internas del formato expuesto en las APIs.
+- **Validación estructurada**: uso de anotaciones y controladores robustos.
+- **Seguridad entre servicios**: autenticación mediante API Key.
+- **HTTP Client Resilience**: estructura preparada para manejar errores entre servicios.
+
+---
+
+### Mejoras futuras y escalabilidad
+
+- Comunicación asincrónica basada en eventos (Kafka, RabbitMQ).
+- Escalado horizontal con Kubernetes.
+- Autenticación de usuarios finales con OAuth2 o JWT.
+- Versionado de API con rutas `/api/v1/...`.
+- Aumento de cobertura de pruebas y pruebas de carga.
+- Service Discovery con Consul o Eureka.
+
+---
+
+Proyecto listo para ser probado, desplegado y ampliado según futuras necesidades del sistema.
 
