@@ -2,6 +2,13 @@
 
 Este proyecto implementa una arquitectura basada en microservicios para gestionar productos e inventario, con comunicación entre servicios vía HTTP y seguridad mediante API Keys.
 
+Repositorio general: [https://github.com/Jonathan0148/products-inventory.git](https://github.com/Jonathan0148/products-inventory.git)
+
+> 📌 Este repositorio combina ambos microservicios para facilitar la orquestación con Docker. Cada microservicio también se encuentra de forma independiente en:
+>
+> - Repositorio de Productos: [https://github.com/Jonathan0148/productinventory.git](https://github.com/Jonathan0148/productinventory.git)
+> - Repositorio de Inventario: [https://github.com/Jonathan0148/inventoryproduct.git](https://github.com/Jonathan0148/inventoryproduct.git)
+
 ---
 
 ### 1️⃣ Instrucciones de instalación y ejecución
@@ -12,11 +19,11 @@ Este proyecto implementa una arquitectura basada en microservicios para gestiona
 - Java 17
 - Maven 3.9.x
 
-#### 🧱 Clonar el repositorio
+#### 🧱 Clonar el repositorio principal
 
 ```bash
-git clone https://github.com/tu-usuario/product-inventory.git
-cd product-inventory
+git clone https://github.com/Jonathan0148/products-inventory.git
+cd products-inventory
 ```
 
 #### 🛠️ Construir los microservicios
@@ -59,6 +66,13 @@ El sistema se compone de:
 
 **Seguridad:** autenticación entre servicios con API Keys.
 
+**Base de datos:** se eligió PostgreSQL por ser un motor SQL robusto, ampliamente adoptado en la industria, con excelente soporte en entornos productivos y compatibilidad con Spring Boot.
+
+**Justificación sobre la base de datos:**
+
+- No se optó por SQLite debido a sus limitaciones de concurrencia y escalabilidad, lo cual no es ideal para operaciones críticas como inventario en tiempo real.
+- No se usó NoSQL porque los modelos requeridos tienen relaciones estructuradas (producto ↔ inventario) que encajan mejor en un modelo relacional. Además, SQL ofrece transacciones ACID y validaciones de integridad que son clave para evitar inconsistencias en compras.
+
 ---
 
 ### 3️⃣ Decisiones técnicas y justificaciones
@@ -70,6 +84,9 @@ El sistema se compone de:
   - Es donde se maneja el stock.
   - Es responsable de validar existencia del producto vía consulta al microservicio de productos.
   - Sigue la lógica de “ownership” del dominio.
+- **Bounded Context y Single Responsibility:** cada microservicio tiene un contexto delimitado y responsabilidades claras:
+  - El microservicio de productos se ocupa únicamente de operaciones CRUD sobre productos.
+  - El microservicio de inventario maneja exclusivamente la lógica de inventario y el proceso de compra. Esta división respeta el principio de responsabilidad única y evita acoplamientos innecesarios.
 
 ---
 
@@ -104,21 +121,59 @@ sequenceDiagram
 
 ### 6️⃣ Uso de herramientas de IA en el desarrollo
 
-Durante el desarrollo se utilizó **ChatGPT (GPT-4o)** como asistente de codificación para:
+Durante el desarrollo se utilizó **ChatGPT (GPT-4o)** como herramienta de acompañamiento técnico para:
 
-- Generar estructura inicial de los proyectos Spring Boot.
-- Crear clases DTO, servicios, controladores y entidades.
-- Implementar pruebas unitarias e integración.
-- Generar lógica de comunicación entre servicios y validación con API Keys.
-- Diagnosticar errores y configurar Docker Compose.
+- Validar estructuras arquitectónicas y decisiones de diseño.
+- Revisar flujos de lógica y detectar errores potenciales.
+- Proponer buenas prácticas y mejoras en la calidad del código.
 
-🔍 **Validación del código generado:**
-
-- Todo el código fue revisado manualmente.
-- Se realizaron pruebas automatizadas con JUnit y pruebas manuales en Postman.
-- Se verificó el comportamiento de los microservicios al ejecutarse vía Docker.
+🧠 Todas las recomendaciones fueron evaluadas críticamente y adaptadas al contexto del proyecto.
 
 ---
 
-✅ Proyecto listo para ser probado y ampliado según futuras necesidades del sistema.
+### 📬 Documentación de APIs
+
+- Swagger UI para cada microservicio:
+  - [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+  - [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
+
+---
+
+### 📁 Postman
+
+En la raíz del proyecto encontrarás:
+
+- 📨 **Colección de Postman** con todos los endpoints documentados.
+- 🌐 **Environment de Postman** con API Keys y hosts preconfigurados.
+
+---
+
+### 🧪 Pruebas
+
+Cada microservicio contiene:
+
+- ✅ **Pruebas unitarias** completas con JUnit.
+- 🔁 **Pruebas de integración** que simulan escenarios reales (con base de datos y llamadas HTTP).
+
+#### Ejecutar pruebas unitarias
+
+Desde la raíz de cada microservicio:
+
+```bash
+./mvnw test
+```
+
+#### Ejecutar pruebas de integración
+
+Las pruebas de integración se ejecutan automáticamente durante el proceso de build con:
+
+```bash
+./mvnw clean verify
+```
+
+También pueden ejecutarse individualmente desde el IDE o con comandos específicos por clase.
+
+---
+
+✅ Proyecto listo para ser probado, desplegado y ampliado según futuras necesidades del sistema.
 
